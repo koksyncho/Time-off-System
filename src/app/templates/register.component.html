@@ -1,0 +1,24 @@
+<div align="center">
+
+  <h3> Register </h3>
+
+  <div>
+    <form onsubmit="return false">
+      <p> Username: </p>
+      <input type="username" placeholder="Username" #username required />
+
+      <p> Inventix Email: </p>
+      <input type="email" placeholder="Email" #email required />
+
+      <p> Password: </p>
+      <input type="password" placeholder="Password" #password required />
+
+      <p> Confirm Password: </p>
+      <input type="password" placeholder="Password" #password required />
+
+      <br>
+      <button (click)="register(username.value, email.value, password.value)"> Register </button>
+    </form>
+  </div>
+
+</div>
