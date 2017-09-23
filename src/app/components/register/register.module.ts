@@ -1,20 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { LoginRoutes } from './login.routes';
+import { RegisterRoutes } from './register.routes';
 import { UserService } from '../../services/user.service';
 
-import { LoginComponent } from './login.component';
+import { RegisterComponent } from './register.component';
 
 @NgModule({
   declarations: [
-    LoginComponent
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
-    LoginRoutes
+    RegisterRoutes
   ],
   providers: [
     UserService
   ]
 })
-export class LoginModule {}
+export class RegisterModule {}
