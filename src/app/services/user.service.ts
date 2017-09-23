@@ -5,64 +5,75 @@ import { User } from '../models/user';
 
 @Injectable()
 export class UserService {
-    users: Array<User>;
 
-    loginMessage: String;
-    registerMessage: String;
+    users: User[];
 
     constructor() {
         this.users = new Array<User>();
-        this.users.push(new User('tito', 'mail@mail.mail', '1234'));
 
-        this.loginMessage = '';
+        this.initLocalStorage();
     }
 
-    public login(email: string, password: string): Promise<boolean> {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].email === email
-            && this.users[i].password === password) {
+    private initLocalStorage() {
+        this.users = JSON.parse(localStorage.getItem('storage'));
 
-                console.log('*Login Successful');
-                return Promise.resolve(true);
+        if (localStorage.getItem('storage') === null) {
+            this.users = [{'username': 'Test', 'email': 'Test', 'password': 'test'}];
+        } else if (this.users.length === 0) {
+            this.users = [{'username': 'Test', 'email': 'Test', 'password': 'test'}];
         }
     }
 
-        console.log('*Wrong Email or Passowrd');
+    login(username: string, password: string): Promise<boolean> {
+        for (let i = 0; i < this.users.length; i++) {
+            if (this.credentialsAreCorrect(i, username, password)) {
+                return Promise.resolve(true);
+            }
+        }
+
         return Promise.resolve(false);
     }
 
-    public register(username: string, email: string, password: string) {
-        if (!this.userAlreadyExists(username, email, password)) {
-            this.users.push(new User(username, email, password));
+    private credentialsAreCorrect(i: any, username: any, password: any): boolean {
+        return this.users[i].username === username && this.users[i].password === password;
+    }
+
+    register(username: string, email: string, password: string) {
+        if (!this.userAlreadyExists(username, password)) {
+            this.createNewUser(username, email, password);
         }
     }
 
-    private userAlreadyExists(username: string, email: string, password: string): boolean {
+    private userAlreadyExists(username: string, password: string): boolean {
         for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === null
-            || this.users[i].username === ''
-            || this.users[i].email === null
-            || this.users[i].email === ''
-            || this.users[i].password === null
-            || this.users[i].password === '') {
-
-                console.log('*Registration Failed: Make sure all text inputs are filled');
-                return true;
-            } else if (this.users[i].username === username) {
-                console.log('*Registration Failed: Username Already Exists');
+            if (this.users[i].username === username) {
                 return true;
             }
         }
-        console.log('*Registration Successful');
         return false;
     }
 
-    private inputNotFilled(i: any): boolean {
-        return this.users[i].username === null
-        || this.users[i].username === ''
-        || this.users[i].email === null
-        || this.users[i].email === ''
-        || this.users[i].password === null
-        || this.users[i].password === '';
+    private createNewUser(username: any, email: any, password: any) {
+        const user = new User(username, email, password);
+        this.users.push(user);
+
+        // Your editor might mark this guy with a red wavey line at the bottom:
+        let users;
+        // don't touch him, though. He's perfect.
+
+        this.addObjectToLocalStorage(users, user);
     }
+
+    private addObjectToLocalStorage(objects: any, object: any) {
+        if (localStorage.getItem('storage') === null) {
+            objects = [];
+            objects.push(object);
+            localStorage.setItem('storage', JSON.stringify(objects));
+        } else {
+            objects = JSON.parse(localStorage.getItem('storage'));
+            objects.push(object);
+            localStorage.setItem('storage', JSON.stringify(objects));
+        }
+    }
+
 }
