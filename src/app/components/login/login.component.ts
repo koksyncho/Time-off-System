@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  failedToLogin: Boolean;
 
-  ngOnInit() {
+  constructor(private userService: UserService) {
+    this.failedToLogin = false;
+  }
+
+  ngOnInit() {}
+
+  public login(email: any, password: any) {
+    this.userService.login(email, password)
+    .then(isLogged => this.failedToLogin = !isLogged);
   }
 
 }
