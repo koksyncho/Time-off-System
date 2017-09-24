@@ -7,16 +7,18 @@ import { RegisterModule } from './components/register/register.module';
 import { MainPageModule } from './components/main-page/main-page.module';
 
 import { AppComponent } from './app.component';
+import { RequestsModule } from './components/requests/requests.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutes,
     LoginModule,
     RegisterModule,
+    RequestsModule,
     MainPageModule
   ],
   providers: [],
