@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class RequestsComponent implements OnInit
 {
-  pto:number; //Paid Time Off
+  pto:number; //Paid Time Off (available)
   index:number; //total number of requests
 
   constructor(private router:Router)
