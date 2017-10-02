@@ -1,10 +1,10 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { MainPageComponent } from './main-page.component';
+import { LoginAttemptComponent } from './login-attempt.component';
 
 export const appRoutes: Routes = [
-    { path: 'main-page', component: MainPageComponent}
+    { path: 'login-attempt', component: LoginAttemptComponent}
 ];
 
 @NgModule({
@@ -12,4 +12,4 @@ export const appRoutes: Routes = [
     exports: [RouterModule]
 })
 
-export class MainPageRoutes {}
+export class LoginAttemptRoutes {}

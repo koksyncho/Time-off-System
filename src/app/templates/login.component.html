@@ -3,7 +3,7 @@
   <h3> Login </h3>
 
   <div>
-    <form onsubmit="return false">
+    <!-- <form onsubmit="return false"> -->
       <p> Inventix Email: </p>
       <input type="email" placeholder="Email" #email required />
 
@@ -11,8 +11,10 @@
       <input type="password" placeholder="Password" #password required />
 
       <br>
-      <button (click)="login(email.value, password.value)"> Log In </button>
-      </form>
+      <button (click)="login(email.value, password.value)" routerLink="/login-attempt" routerLinkActive="active">
+        Log In
+      </button>
+    <!-- </form> -->
   </div>
 
   <a routerLink="/register" routerLinkActive="active"> Or Register a New Profile </a>

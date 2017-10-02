@@ -7,11 +7,17 @@ import { User } from '../models/user';
 export class UserService {
 
     users: User[];
+    public isLogged: boolean;
+
+    public pageName: string;
+
+    public currentUsername: string;
 
     constructor() {
         this.users = new Array<User>();
-
         this.initLocalStorage();
+
+        this.isLogged = false;
     }
 
     private initLocalStorage() {
@@ -24,14 +30,21 @@ export class UserService {
         }
     }
 
-    login(username: string, password: string): Promise<boolean> {
+    login(username: string, password: string) {
         for (let i = 0; i < this.users.length; i++) {
             if (this.credentialsAreCorrect(i, username, password)) {
-                return Promise.resolve(true);
+                this.isLogged = true;
+                this.currentUsername = this.users[i].username;
+
+                console.log('login attempt successful');
+                break;
+            } else {
+                this.isLogged = false;
             }
         }
-
-        return Promise.resolve(false);
+        if (!this.isLogged) {
+            console.log('login attempt failed');
+        }
     }
 
     private credentialsAreCorrect(i: any, username: any, password: any): boolean {
@@ -41,6 +54,9 @@ export class UserService {
     register(username: string, email: string, password: string) {
         if (!this.userAlreadyExists(username, password)) {
             this.createNewUser(username, email, password);
+            console.log('register attempt successful.');
+        } else {
+            console.log('register attempt failed.');
         }
     }
 

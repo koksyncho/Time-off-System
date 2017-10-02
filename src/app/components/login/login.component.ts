@@ -8,17 +8,12 @@ import { UserService } from '../../services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  failedToLogin: Boolean;
-
-  constructor(private userService: UserService) {
-    this.failedToLogin = false;
-  }
+  constructor(private userService: UserService) {}
 
   ngOnInit() {}
 
   public login(email: any, password: any) {
-    this.userService.login(email, password)
-    .then(isLogged => this.failedToLogin = !isLogged);
+    this.userService.login(email, password);
   }
 
 }

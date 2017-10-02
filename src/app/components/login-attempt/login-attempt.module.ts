@@ -1,20 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MainPageRoutes } from './main-page.routes';
+import { LoginAttemptRoutes } from './login-attempt.routes';
 import { UserService } from '../../services/user.service';
 
-import { MainPageComponent } from './main-page.component';
+import { LoginAttemptComponent } from './login-attempt.component';
 
 @NgModule({
   declarations: [
-    MainPageComponent
+    LoginAttemptComponent
   ],
   imports: [
     BrowserModule,
-    MainPageRoutes
+    LoginAttemptRoutes
   ],
   providers: [
     UserService
   ]
 })
-export class MainPageModule {}
+export class LoginAttemptModule {}
