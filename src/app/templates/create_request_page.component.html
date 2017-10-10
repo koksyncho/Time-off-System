@@ -1,0 +1,154 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+		<style>
+			html, body {
+				height: 100%;
+			}
+
+			html {
+				display: table;
+				margin: auto;
+			}
+
+			body {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			.borderless td, .borderless th {
+				border: none;
+			}
+			
+			textarea {
+				width: 80vw;
+				height: 10vh;
+				border-radius: 5px;
+			}
+			
+			select {
+				width: 80vw;
+				height: 5vh;
+				border-radius: 5px;
+			}
+			
+			.attention-text {
+				border-radius: 2px;
+				color: white;
+				background: red; 
+				font-weight: bold;
+			}
+			
+			.blue-text {
+				color: blue;
+				font-weight: bold;
+			}
+			
+			.calendar-info {
+				padding-left: 50%;
+			}
+			
+			.grey-panel {
+				background-color: grey;
+				background:rgba(0,0,0,0.05);
+				width: 80vw;
+				height: 5vh;
+				border-radius: 5px;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<!--<div class="panel panel-default">
+			<div class="panel-body"><a href="#">Home</a> / <a href="#">Requests</a> / Request</div>
+		</div>-->
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<tr>
+					<td scope="row" class="col-md-5"><a href="#">Home</a> / <a href="#">Requests</a> / Create Request</td>
+				</tr>
+			</tbody>
+		</table>
+	
+		<h1>Create Request</h1>
+	
+		<table class="table borderless">
+			<!--<thead>
+				<tr>
+					<th>#</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Username</th>
+				</tr>
+			</thead>-->
+			
+			<tbody>
+				<tr>
+					<th scope="row">Absence Type</th>
+				</tr>
+				<tr>
+					<td>
+						<select scope="row selectpicker">
+						  <option value="pto">PTO</option>
+						  <option value="pto2">PTO2</option>
+						  <option value="pto3">PTO3</option>
+						  <option value="pto4">PTO4</option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">Reason</th>
+				</tr>
+				<tr>
+					<td>
+						<textarea></textarea>
+					</td>
+				</tr>
+				
+				<tr>
+					<th>Note</th>
+				</tr>
+				<tr>
+					<td>
+						<textarea></textarea>
+					</td>
+				</tr>
+				
+				<tr>
+					<td align="center">
+						<strong>PTO Left:</strong> 15
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">Dates</th>
+				</tr>
+				<tr>
+					<th scope="row">
+						<div class="grey-panel">
+						</div>
+					</th>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div class="calendar-info float-center">
+			<strong>Info:</strong>
+				<ul>
+					<li>
+						Click on <strong>EVERY</strong> date you want to select.
+					</li>
+				  
+					<li>
+						<font class="attention-text">red</font> colored are National Holidays (not working day).
+					</li>
+				  
+					<li><font class="blue-text">blue</font> colored dates are special not working days, usually ignored in <a href="#">MentorMate.</a>
+						<br>
+						See instructions on how to book them in <a href="#">Confliuence</a>. 
+					</li>
+				</ul>
+		</div>
+	</body>
+</html>
