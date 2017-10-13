@@ -8,10 +8,12 @@ import { MainPageModule } from './components/main-page/main-page.module';
 
 import { AppComponent } from './app.component';
 import { RequestsModule } from './components/requests/requests.module';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
