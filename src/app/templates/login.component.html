@@ -1,22 +1,54 @@
-<div align="center">
+<h1> Login </h1>
 
-  <h3> Login </h3>
+<form #userForm="ngForm">
 
-  <div>
-    <!-- <form onsubmit="return false"> -->
-      <p> Inventix Email: </p>
-      <input type="email" placeholder="Email" #email required />
+  <div [hidden]="userForm.submitted">
 
-      <p> Password: </p>
-      <input type="password" placeholder="Password" #password required />
+    <div class="form-group">
 
+      <label for="email">Email</label>
       <br>
-      <button (click)="login(email.value, password.value)" routerLink="/login-attempt" routerLinkActive="active">
-        Log In
-      </button>
-    <!-- </form> -->
+      <input  id="email" name="email" required minlength="7" [(ngModel)]="user.email" #email="ngModel" >
+      <br>
+
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+          
+        <div *ngIf="email.errors.required">
+          This field is required.
+        </div>
+
+        <div *ngIf="email.errors.minlength">
+          Email must be at least 7 characters long.
+        </div>
+
+      </div>
+
+      <label for="password">Password</label>
+      <br>
+      <input  type="password" id="password" name="password" required minlength="7" [(ngModel)]="user.password" #password="ngModel" >
+      <br>
+
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+          
+        <div *ngIf="password.errors.required">
+          This field is required.
+        </div>
+
+        <div *ngIf="password.errors.minlength">
+          Password must be at least 7 characters long.
+        </div>
+
+      </div>
+
+    </div>
+
+    <button type="submit" class="btn btn-default" [disabled]="userForm.invalid" (click)="login(email.value, password.value)"> Submit </button>
+
   </div>
 
-  <a routerLink="/register" routerLinkActive="active"> Or Register a New Profile </a>
+  <div class="submitted-message" *ngIf="userForm.submitted">
+    <p style="white-space: pre-wrap">{{ userService.loginMessage }}</p>
+    <button (click)="userForm.resetForm({})">Go Back</button>
+  </div>
 
-</div>
+</form>

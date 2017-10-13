@@ -8,6 +8,8 @@ import { UserService } from '../../services/user.service';
 })
 export class LoginComponent implements OnInit {
 
+  user = {username: null, email: null, password: null};
+
   constructor(private userService: UserService) {}
 
   ngOnInit() {}

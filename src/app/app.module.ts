@@ -4,7 +4,6 @@ import { AppRoutes } from './app.routes';
 
 import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
-import { LoginAttemptModule } from './components/login-attempt/login-attempt.module';
 
 import { AppComponent } from './app.component';
 import { RequestsModule } from './components/requests/requests.module';
@@ -18,8 +17,7 @@ import { RequestsModule } from './components/requests/requests.module';
     AppRoutes,
     LoginModule,
     RegisterModule,
-    RequestsModule,
-    LoginAttemptModule
+    RequestsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
