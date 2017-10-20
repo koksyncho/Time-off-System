@@ -50,6 +50,10 @@ export class UserService {
         return this.users[i].email === email && this.users[i].password === password;
     }
 
+    logOut() {
+        this.isLogged = false;
+    }
+
     register(username: string, email: string, password: string) {
         if (!this.registrationFailed(username, email)) {
             this.createNewUser(username, email, password);

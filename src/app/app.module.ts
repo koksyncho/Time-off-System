@@ -8,18 +8,26 @@ import { RegisterModule } from './components/register/register.module';
 import { AppComponent } from './app.component';
 import { RequestsModule } from './components/requests/requests.module';
 
+import { FormsModule } from '@angular/forms';
+import { LoginRoutes } from './components/login/login.routes';
+import { UserService } from './services/user.service';
+import { LoginComponent } from './components/login/login.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutes,
     LoginModule,
     RegisterModule,
-    RequestsModule
+    RequestsModule,
+    LoginRoutes,
+    FormsModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

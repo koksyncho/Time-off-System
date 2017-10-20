@@ -18,4 +18,9 @@ export class LoginComponent implements OnInit {
     this.userService.login(email, password);
   }
 
+  public logOut(userForm: any) {
+    this.userService.logOut();
+    userForm.resetForm({});
+  }
+
 }

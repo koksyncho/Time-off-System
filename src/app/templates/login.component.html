@@ -48,7 +48,8 @@
 
   <div class="submitted-message" *ngIf="userForm.submitted">
     <p style="white-space: pre-wrap">{{ userService.loginMessage }}</p>
-    <button (click)="userForm.resetForm({})">Go Back</button>
+    <button *ngIf="!userService.isLogged" (click)="userForm.resetForm({})">Reset</button>
+    <button *ngIf="userService.isLogged" (click)="logOut(userForm)">Log Out</button>
   </div>
 
 </form>
