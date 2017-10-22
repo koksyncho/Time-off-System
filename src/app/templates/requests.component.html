@@ -23,7 +23,7 @@
       <td *ngIf="admin">{{ request.owner }}</td>
       <td>{{ request.type }}</td>
       <td>{{ request.days }}</td>
-      <td>{{ request.dates }}</td>
+      <td><a href="#/request-datails/{{ request.id }}">{{ request.dates }}</a></td>
       <td>{{ request.submit }}</td>
       <td>{{ request.status }}</td>
     </tr>
