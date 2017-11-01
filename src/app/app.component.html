@@ -27,6 +27,4 @@
     </div>
 </nav>
 
-<router-outlet *ngIf="userService.isLogged"></router-outlet>
-
-<h1 *ngIf="!userService.isLogged"> You Have to be Logged In to Access this Page </h1>
+<router-outlet></router-outlet>

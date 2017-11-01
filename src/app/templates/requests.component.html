@@ -1,4 +1,6 @@
-<div align="center">
+<div align="center" *ngIf="userService.isLogged">
   <h3>Requests</h3>
   <p>requests works!</p>
 </div>
+
+<h1 *ngIf="!userService.isLogged"> You Have to be Logged In to Access this Page </h1>
