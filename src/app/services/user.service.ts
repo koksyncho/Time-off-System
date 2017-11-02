@@ -1,79 +1,57 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Http, Response, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { User } from '../models/user';
+import { URLs } from '../models/URLs';
+import { LoginResults, RegisterResults } from '../models/expectedResponse';
 
 @Injectable()
 export class UserService {
+    
+    urls = new URLs();
 
-    users: User[];
-
-    constructor() {
-        this.users = new Array<User>();
-
-        this.initLocalStorage();
+    constructor(private http: HttpClient) {
     }
 
-    private initLocalStorage() {
-        this.users = JSON.parse(localStorage.getItem('storage'));
+    login(username: string, password: string): boolean {
+        let bodyOfRequest = {
+            "name": username,
+            "password": password
+        };
+        let resultsOfLogin:string;
+        this.http.post<LoginResults>(this.urls.loginURL, bodyOfRequest).subscribe(
+            data => { let resultOfLogin = data.results; });
+        if(resultsOfLogin === "login successfull")
+        {
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
 
-        if (localStorage.getItem('storage') === null) {
-            this.users = [{'username': 'Test', 'email': 'Test', 'password': 'test'}];
-        } else if (this.users.length === 0) {
-            this.users = [{'username': 'Test', 'email': 'Test', 'password': 'test'}];
+
+    //this method returns false if it cannot create the user
+    register(admin:boolean, name:string, email:string, password:string, egn:string, pto:number):boolean
+     {
+        let body = {
+            "admin": admin,
+            "name": name,
+            "email": email,
+            "password": password,
+            "egn": egn,
+            "pto": pto
+        }
+        let result:string;
+        this.http.post<RegisterResults>(this.urls.registerURL, body).subscribe(
+            data => { let result = data.results; });
+        if(result.length===0)
+        {
+            return true;
+        }else{
+            return false;
         }
     }
-
-    login(username: string, password: string): Promise<boolean> {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.credentialsAreCorrect(i, username, password)) {
-                return Promise.resolve(true);
-            }
-        }
-
-        return Promise.resolve(false);
-    }
-
-    private credentialsAreCorrect(i: any, username: any, password: any): boolean {
-        return this.users[i].username === username && this.users[i].password === password;
-    }
-
-    register(username: string, email: string, password: string) {
-        if (!this.userAlreadyExists(username, password)) {
-            this.createNewUser(username, email, password);
-        }
-    }
-
-    private userAlreadyExists(username: string, password: string): boolean {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === username) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private createNewUser(username: any, email: any, password: any) {
-        const user = new User(username, email, password);
-        this.users.push(user);
-
-        // Your editor might mark this guy with a red wavey line at the bottom:
-        let users;
-        // don't touch him, though. He's perfect.
-
-        this.addObjectToLocalStorage(users, user);
-    }
-
-    private addObjectToLocalStorage(objects: any, object: any) {
-        if (localStorage.getItem('storage') === null) {
-            objects = [];
-            objects.push(object);
-            localStorage.setItem('storage', JSON.stringify(objects));
-        } else {
-            objects = JSON.parse(localStorage.getItem('storage'));
-            objects.push(object);
-            localStorage.setItem('storage', JSON.stringify(objects));
-        }
-    }
-
 }
