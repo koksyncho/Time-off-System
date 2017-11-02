@@ -8,6 +8,7 @@ import { MainPageModule } from './components/main-page/main-page.module';
 
 import { AppComponent } from './app.component';
 import { RequestsModule } from './components/requests/requests.module';
+import { UserPageModule } from './components/user-page/user-page.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RequestsModule } from './components/requests/requests.module';
     LoginModule,
     RegisterModule,
     RequestsModule,
-    MainPageModule
+    MainPageModule,
+    UserPageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
