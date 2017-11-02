@@ -1,37 +1,48 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Http, Response, Headers} from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
 import { User } from '../models/user';
 import { Admin } from '../models/admin';
+import { URLs } from '../models/URLs';
+import { LoginResults, RegisterResults, StatusUpdateResults } from '../models/expectedResponse';
+import { UserService } from './user.service';
 
 @Injectable()
 export class AdminService 
 {
+	urls = new URLs();
 
-	private approveTimeOff(userId: number, timeOffId:number )
+	constructor(private http: HttpClient, private userService: UserService) {}
+
+	private approveTimeOff(userId: number, timeOffId:number ):string
 	{
-		// here we say to the database "Time off is approved"
+		let result:string;
+		this.http.put<StatusUpdateResults>(this.urls.approveRequestURL+timeOffId.toString, {}).subscribe(
+            data => { let result = data.results; });
+		return result;
 	}
 
-	private disapproveTimeOff(userId: number, timeOffId:number )
+	private disapproveTimeOff(userId: number, timeOffId:number ):string
 	{
-		// here we say to the database "Time off is DISapproved"
+		let result:string;
+		this.http.put<StatusUpdateResults>(this.urls.disapproveRequestURL+timeOffId.toString, {}).subscribe(
+            data => { let result = data.results; });
+		return result;
 	}
 
-	private addNewUser(username: string, pass:string, email:string)
+	private addNewUser(admin:boolean, name:string, email:string, password:string, egn:string, pto:number)
 	{
-		//only the admin is able to create users!!!!
+		this.userService.register(admin, name, email, password, egn, pto);
 	}
 
-	private deleteUser(id:number)
+	private deleteUser(id:number): string
 	{
-		//only the admin is able to delete users!!!!
-	}
-
-	private deleteAllUsers()
-	{
-		//first a message "Are u shure?"
-		//then delete all users
+		let result:string;
+		this.http.put<StatusUpdateResults>(this.urls.deleteUserURL+id.toString, {}).subscribe(
+            data => { let result = data.results; });
+		return result;
 	}
 
 }

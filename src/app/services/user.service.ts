@@ -21,8 +21,10 @@ export class UserService {
             "password": password
         };
         let resultsOfLogin:string;
+
         this.http.post<LoginResults>(this.urls.loginURL, bodyOfRequest).subscribe(
             data => { let resultOfLogin = data.results; });
+
         if(resultsOfLogin === "login successfull")
         {
             return true;
@@ -35,7 +37,7 @@ export class UserService {
 
     //this method returns false if it cannot create the user
     register(admin:boolean, name:string, email:string, password:string, egn:string, pto:number):boolean
-     {
+    {
         let body = {
             "admin": admin,
             "name": name,
