@@ -1,0 +1,55 @@
+*In the case of this particular commit the changes have been done to the requests component instead of the app component*
+
+Steps to get the pdf file creation working:
+
+1.open your angular project folder
+
+2.open the console
+
+3.type the following command in this order
+	"npm install jspdf --save"
+	"npm install typings --global"
+	"typings install dt~jspdf --global --save"
+	"pm install @types/jspdf --save"
+
+4.in agular-cli.json add:
+	"scripts": [ "../node_modules/jspdf/dist/jspdf.min.js" ]
+(there should already be "scripts": [] so just add the path in the brackets)
+
+5.add the following code to your app.component.html file:
+	<button (click)="download()">download </button>
+
+6.change your app.component.ts in the following way (you can copy-paste this):
+
+import { Component, Inject } from '@angular/core';
+import { OnInit } from '@angular/core';
+import * as jsPDF from 'jspdf';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+  providers: [
+    { provide: 'Window',  useValue: window }
+  ]
+})
+
+export class AppComponent implements OnInit {
+	title = 'app';
+	ngOnInit() {}
+	constructor(
+		@Inject('Window') private window: Window,
+	) { }
+
+	download() {
+		var doc = new jsPDF();
+		doc.text(20, 20, 'Hello world!');
+		doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+		doc.addPage();
+		doc.text(20, 20, 'Do you like that?');
+
+		// Save the PDF
+		doc.save('Test.pdf');
+	}
+}
+

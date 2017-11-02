@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { OnInit } from '@angular/core';
+import * as jsPDF from 'jspdf';
+
 import { Router } from '@angular/router';
 
 import { Request } from '../../models/request'
@@ -6,7 +9,10 @@ import { Request } from '../../models/request'
 @Component({
   selector: 'app-requests',
   templateUrl: '../../templates/requests.component.html',
-  styleUrls: ['../../styles/requests.component.css']
+  styleUrls: ['../../styles/requests.component.css'],
+  providers: [
+    { provide: 'Window',  useValue: window }
+  ]
 })
 export class RequestsComponent implements OnInit
 {
@@ -14,7 +20,9 @@ export class RequestsComponent implements OnInit
   pto:number; //Paid Time Off (available)
   admin:boolean; //if the user is an admin or not
 
-  constructor(private router:Router)
+  constructor(
+    @Inject('Window') private window: Window,
+    private router:Router)
   {
     this.admin = true; //only for testing... *to be removed*
     this.pto = 15; //only for testing... *to be removed*
@@ -27,6 +35,17 @@ export class RequestsComponent implements OnInit
       {"id":"6", "owner":"...", "type":"...", "days":"...", "dates":"...", "submit":"...", "status":"..."},
       {"id":"7", "owner":"...", "type":"...", "days":"...", "dates":"...", "submit":"...", "status":"..."}
     ]; //this data will be coming from the server... this here is only for testing *to be removed*
+  }
+
+  download(requestDetails) {
+    var doc = new jsPDF();
+    doc.text(20, 20, 'Hello ' + requestDetails + ' world!');
+    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+    doc.addPage();
+    doc.text(20, 20, 'Do you like that?');
+
+    // Save the PDF
+    doc.save('Request.pdf');
   }
 
   ngOnInit() {
