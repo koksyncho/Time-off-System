@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RequestsRoutes } from './requests.routes';
 import { UserService } from '../../services/user.service';
+import { CalendarService } from '../../services/calendar.service';
 
 import { RequestsComponent } from './requests.component';
 
@@ -26,7 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DemoUtilsModule,
     BrowserAnimationsModule
   ],
-  providers: [UserService],
+  providers: [UserService, CalendarService],
   exports: [RequestsComponent]
 })
 export class RequestsModule {}
