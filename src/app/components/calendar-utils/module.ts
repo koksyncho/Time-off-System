@@ -20,4 +20,4 @@ import { DateTimePickerComponent } from './date-time-picker.component';
   declarations: [CalendarHeaderComponent, DateTimePickerComponent],
   exports: [CalendarHeaderComponent, DateTimePickerComponent]
 })
-export class DemoUtilsModule {}
+export class CalendarUtilsModule {}

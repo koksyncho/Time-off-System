@@ -30,12 +30,12 @@ import { UserService } from '../../services/user.service';
 import { CalendarService } from '../../services/calendar.service';
 
 @Component({
-  selector: 'app-requests',
+  selector: 'app-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: '../../templates/requests.component.html',
-  styleUrls: ['./requests.component.css']
+  templateUrl: '../../templates/calendar.component.html',
+  styleUrls: ['./calendar.component.css']
 })
-export class RequestsComponent implements OnInit {
+export class CalendarComponent implements OnInit {
 
   modalContent = this.calService.modalContent;
   view = this.calService.view;

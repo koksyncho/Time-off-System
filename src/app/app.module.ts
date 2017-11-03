@@ -6,7 +6,7 @@ import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
 
 import { AppComponent } from './app.component';
-import { RequestsModule } from './components/requests/requests.module';
+import { CalModule } from './components/calendar/calendar.module';
 
 import { FormsModule } from '@angular/forms';
 import { LoginRoutes } from './components/login/login.routes';
@@ -23,7 +23,7 @@ import { LoginComponent } from './components/login/login.component';
     AppRoutes,
     LoginModule,
     RegisterModule,
-    RequestsModule,
+    CalModule,
     LoginRoutes,
     FormsModule
   ],

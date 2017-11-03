@@ -1,33 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RequestsRoutes } from './requests.routes';
+import { CalendarRoutes } from './calendar.routes';
 import { UserService } from '../../services/user.service';
 import { CalendarService } from '../../services/calendar.service';
 
-import { RequestsComponent } from './requests.component';
+import { CalendarComponent } from './calendar.component';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { DemoUtilsModule } from '../demo-utils/module';
+import { CalendarUtilsModule } from '../calendar-utils/module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
-    RequestsComponent
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
-    RequestsRoutes,
+    CalendarRoutes,
     CommonModule,
     FormsModule,
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),
-    DemoUtilsModule,
+    CalendarUtilsModule,
     BrowserAnimationsModule
   ],
   providers: [UserService, CalendarService],
-  exports: [RequestsComponent]
+  exports: [CalendarComponent]
 })
-export class RequestsModule {}
+export class CalModule {}
