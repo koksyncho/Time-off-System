@@ -8,10 +8,18 @@ export class UserService {
 
     users: User[];
 
+    public isLogged: boolean;
+    public pageName: string;
+    public currentUsername: string;
+    public registerMessage: any;
+    public loginMessage: any;
+
     constructor() {
         this.users = new Array<User>();
-
         this.initLocalStorage();
+        this.isLogged = false;
+        this.registerMessage = '';
+        this.loginMessage = '';
     }
 
     private initLocalStorage() {
@@ -24,32 +32,84 @@ export class UserService {
         }
     }
 
-    login(username: string, password: string): Promise<boolean> {
+    login(email: string, password: string) {
         for (let i = 0; i < this.users.length; i++) {
-            if (this.credentialsAreCorrect(i, username, password)) {
-                return Promise.resolve(true);
+            if (this.credentialsAreCorrect(i, email, password)) {
+                this.isLogged = true;
+                this.currentUsername = this.users[i].email;
+                this.loginMessage = 'Login Successful';
+                break;
+            } else {
+                this.isLogged = false;
+                this.loginMessage = 'Login Failed: Wrong email or password;';
             }
         }
-
-        return Promise.resolve(false);
     }
 
-    private credentialsAreCorrect(i: any, username: any, password: any): boolean {
-        return this.users[i].username === username && this.users[i].password === password;
+    private credentialsAreCorrect(i: any, email: any, password: any): boolean {
+        return this.users[i].email === email && this.users[i].password === password;
+    }
+
+    logOut() {
+        this.isLogged = false;
     }
 
     register(username: string, email: string, password: string) {
-        if (!this.userAlreadyExists(username, password)) {
+        if (!this.registrationFailed(username, email)) {
             this.createNewUser(username, email, password);
+
+            this.registerMessage = 'Registration Successful';
         }
     }
 
-    private userAlreadyExists(username: string, password: string): boolean {
+    private registrationFailed(username: string, email: string): boolean {
+        let regFailed = false;
+
+        let firstMessageShown = false;
+        let secondMessageShown = false;
+        let thirdMessageShown = false;
+
+        this.registerMessage = 'Registration Failed: \n';
+
         for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === username) {
+            if (this.users[i].username === username && !firstMessageShown) {
+                this.registerMessage += 'Username already taken. \n';
+                regFailed = true;
+                firstMessageShown = true;
+            }
+
+            if (this.users[i].email === email && !secondMessageShown) {
+                this.registerMessage += 'Email already taken. \n';
+                regFailed = true;
+                secondMessageShown = true;
+            }
+
+            if (!this.emailFormIsCorrect(email) && !thirdMessageShown) {
+                this.registerMessage += 'The submitted email is not in the correct format (name@provider.domain). \n';
+                regFailed = true;
+                thirdMessageShown = true;
+            }
+        }
+
+        if (regFailed) {
+            return true;
+        }
+        return false;
+    }
+
+    private emailFormIsCorrect(email: string) {
+        let atExists = false;
+
+        for (let i = 0; i < email.length; i++) {
+            if (email[i] === '@') {
+                atExists = true;
+            }
+
+            if (atExists && email[i] === '.') {
                 return true;
             }
         }
+
         return false;
     }
 
