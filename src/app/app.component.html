@@ -1,33 +1,65 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <a routerLink="/register" routerLinkActive="active">Register A New User (Admin Option)</a>
-    <a routerLink="/calendar" routerLinkActive="active">Calendar Component</a>
-    <a routerLink="/main-page" routerLinkActive="active">Main</a>
-    <!-- <a routerLink="/login" routerLinkActive="active">Login</a> -->
-    <a routerLink="/user-page" routerLinkActive="active">User Page</a>
-    <a routerLink="/requests" routerLinkActive="active">Requests</a>
-
-    <div id="navbar" class="collapse navbar-collapse">
-
-        <ul class="nav navbar-nav navbar-right">
-
-            <li class="dropdown">
-
-                <a class="dropdown-toggle" data-toggle="dropdown">
-                    Log In 
-                    <span class="caret"></span>
-                </a>
-
-                <ul class="dropdown-menu dropdown-lr animated slideInRight" role="menu">
-
-                    <app-login></app-login>
-
-                </ul>
-
-            </li>
-
-        </ul>
-
+    
+    <a routerLink="/main-page" routerLinkActive="active">Home</a>
+    <div *ngIf="userService.isLogged">
+        /
+        <a routerLink="/register" routerLinkActive="active">Register A New User (Admin Option)</a>
+        /
+        <a routerLink="/calendar" routerLinkActive="active">Calendar Component</a>
+        /
+        <a routerLink="/user-page" routerLinkActive="active">User Page</a>
+        /
+        <!-- can maybe be shown only if the user is an admin -->
+        <a routerLink="/requests" routerLinkActive="active">Requests</a>
+        /
+        <a routerLink="/request-creation" routerLinkActive="active">Create Request</a>
+        /
+        <a routerLink="/single-request" routerLinkActive="active">Single Request</a>
     </div>
+
+    <form #userForm="ngForm">
+        <div [hidden]="userForm.submitted" class="login-form">
+            <!-- <div id="navbar" class="collapse navbar-collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            Log In 
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-lr animated slideInRight" role="menu">
+                            <app-login></app-login>
+                        </ul>
+
+                    </li>
+                </ul>
+            </div> -->
+            <div id="navbar" class="collapse navbar-collapse">
+
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown">
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" *ngIf="!userService.isLogged">
+                            Log In 
+                        </a>
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" *ngIf="userService.isLogged">
+                            Logout 
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-lr animated slideInRight" role="menu">
+                            <app-login></app-login>
+                        </ul>
+
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </form>
 </nav>
 
 <router-outlet></router-outlet>

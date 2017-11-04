@@ -18,6 +18,12 @@
 		    <p>***********</p> 
 	  	</div>
 	</div>
+	
+	<a routerLink="/requests" routerLinkActive="active" class="btn btn-success">Requests</a>
+
+	<router-outlet></router-outlet>
+
 </div>
+
 
 <h1 *ngIf="!userService.isLogged"> You Have to be Logged In to Access this Page </h1>

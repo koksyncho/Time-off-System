@@ -1,0 +1,43 @@
+/*body {
+	padding-left: 10vw;
+}*/
+
+.borderless td, .borderless th {
+	border: none;
+}
+
+textarea {
+	width: 80vw;
+	height: 10vh;
+	border-radius: 5px;
+}
+
+select {
+	width: 80vw;
+	height: 5vh;
+	border-radius: 5px;
+}
+
+.attention-text {
+	border-radius: 2px;
+	color: white;
+	background: red; 
+	font-weight: bold;
+}
+
+.blue-text {
+	color: blue;
+	font-weight: bold;
+}
+
+.calendar-info {
+	padding-left: 50%;
+}
+
+.grey-panel {
+	background-color: grey;
+	background:rgba(0,0,0,0.05);
+	width: 80vw;
+	height: 5vh;
+	border-radius: 5px;
+}

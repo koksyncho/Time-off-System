@@ -1,0 +1,15 @@
+.dropdown-menu {
+	position: absolute;
+}
+
+a {
+	display: inline-block;
+}
+
+.collapse {
+	max-width: 10rem;
+}
+
+nav {
+	float: right;
+}

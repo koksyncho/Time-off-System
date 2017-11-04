@@ -1,7 +1,5 @@
 <html>
 	<head>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-	
 		<style rel="stylesheet">
 			.square-box {
 				background-color: #5cb85c;
@@ -25,13 +23,15 @@
 		<table class="table table-bordered table-striped">
 			<tbody>
 				<tr>
-					<td scope="row" class="col-md-5"><a href="#">Home</a> / <a href="#">Requests</a> / Request</td>
+					<td scope="row" class="col-md-5"><a href="#">Home</a> / <a  routerLink="/requests" routerLinkActive="active" class="btn btn-primary">Requests</a> / Single Request</td>
 				</tr>
 			</tbody>
+
+			<router-outlet></router-outlet>
 		</table>
 	
 		<h1>Request</h1>
-	
+		
 		<table class="table table-bordered table-striped">
 			<!--<thead>
 				<tr>
@@ -73,7 +73,7 @@
 				</tr>
 				<tr>
 					<th scope="row">Document</th>
-					<td><a href="#">Document for Print</a></td>
+					<td><a class="download-link" (click)="download('variable')">Document for Print</a></td>
 				</tr>
 				<tr>
 					<th scope="row">Scan</th>
@@ -83,7 +83,7 @@
 		</table>
 		
 		<input size="16" type="text" value="2012-06-15 14:45" readonly class="form_datetime">
- 
+
 		<script type="text/javascript">
 			$(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
 		</script>      
