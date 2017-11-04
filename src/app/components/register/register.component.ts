@@ -8,13 +8,11 @@ import { UserService } from '../../services/user.service';
 })
 export class RegisterComponent implements OnInit {
 
-  failedToRegister: Boolean;
+  user = {username: null, email: null, password: null};
 
-  constructor(private userService: UserService) {
-    this.failedToRegister = false;
-  }
+  constructor(private userService: UserService) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   public register(username: any, email: any, password: any) {
     this.userService.register(username, email, password);
