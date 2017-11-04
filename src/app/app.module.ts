@@ -4,9 +4,11 @@ import { AppRoutes } from './app.routes';
 
 import { LoginModule } from './components/login/login.module';
 import { RegisterModule } from './components/register/register.module';
+import { CalModule } from './components/calendar/calendar.module';
+import { MainPageModule } from './components/main-page/main-page.module';
+import { RequestsModule } from './components/requests/requests.module';
 
 import { AppComponent } from './app.component';
-import { CalModule } from './components/calendar/calendar.module';
 
 import { FormsModule } from '@angular/forms';
 import { LoginRoutes } from './components/login/login.routes';
@@ -25,7 +27,9 @@ import { LoginComponent } from './components/login/login.component';
     RegisterModule,
     CalModule,
     LoginRoutes,
-    FormsModule
+    FormsModule,
+    MainPageModule,
+    RequestsModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
