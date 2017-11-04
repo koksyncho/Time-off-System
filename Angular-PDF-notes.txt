@@ -10,7 +10,7 @@ Steps to get the pdf file creation working:
 	"npm install jspdf --save"
 	"npm install typings --global"
 	"typings install dt~jspdf --global --save"
-	"pm install @types/jspdf --save"
+	"npm install @types/jspdf --save"
 
 4.in agular-cli.json add:
 	"scripts": [ "../node_modules/jspdf/dist/jspdf.min.js" ]

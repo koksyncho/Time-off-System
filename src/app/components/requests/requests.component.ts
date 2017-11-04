@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as jsPDF from 'jspdf';
+import { UserService } from '../../services/user.service';
 
 import { Router } from '@angular/router';
 
@@ -22,7 +23,8 @@ export class RequestsComponent implements OnInit
 
   constructor(
     @Inject('Window') private window: Window,
-    private router:Router)
+    private router:Router,
+    private userService: UserService)
   {
     this.admin = true; //only for testing... *to be removed*
     this.pto = 15; //only for testing... *to be removed*

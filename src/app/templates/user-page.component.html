@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" *ngIf="userService.isLogged">
 	<img src="../../assets/images/img_avatar_man.png" alt="Avatar" style="width:30%">
 	<div class="container">
 	    <h3><b>John Doe</b></h3> 
@@ -19,3 +19,5 @@
 	  	</div>
 	</div>
 </div>
+
+<h1 *ngIf="!userService.isLogged"> You Have to be Logged In to Access this Page </h1>
