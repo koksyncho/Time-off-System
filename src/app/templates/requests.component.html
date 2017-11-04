@@ -1,0 +1,32 @@
+<div class="container">
+  <h3>Requests</h3>
+  <a class="btn btn-success" href="#/create-request" role="button">Create Request</a>
+  <div *ngIf="admin" class="text-right">
+    <a class="btn btn-default" href="#/not-reviewed" role="button">Not Reviewed</a>
+    <a class="btn btn-success" href="#/approved" role="button">Approved</a>
+    <a class="btn btn-danger" href="#/rejected" role="button">Rejected</a>
+  </div>
+  <p class="text-center">You have <b>{{ pto }}</b> days available for Paid Time Off.</p>
+  Showing <b>1-{{ requests.length }}</b> of <b>{{ requests.length }}</b> items
+  <table class="table table-bordered">
+    <tr>
+      <td><b>#</b></td>
+      <td *ngIf="admin"><b>Person's Name</b></td>
+      <td class="blue"><b>Absence Type</b></td>
+      <td><b>Days</b></td>
+      <td class="blue"><b>Dates</b></td>
+      <td class="blue"><b>Submit Date</b></td>
+      <td class="blue"><b>Status</b></td>
+    </tr>
+    <tr *ngFor="let request of requests; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td *ngIf="admin">{{ request.owner }}</td>
+      <td>{{ request.type }}</td>
+      <td>{{ request.days }}</td>
+      <td><a href="#/request-datails/{{ request.id }}">{{ request.dates }}</a></td>
+      <td>{{ request.submit }}</td>
+      <td>{{ request.status }}</td>
+    </tr>
+  </table>
+  <p class="text-center">You have <b>{{ pto }}</b> days available for Paid Time Off.</p>
+</div>
