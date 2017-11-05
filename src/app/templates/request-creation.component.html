@@ -1,14 +1,14 @@
 <html>
-	<body>
+	<body  *ngIf="userService.isLogged">
 		<!--<div class="panel panel-default">
 			<div class="panel-body"><a href="#">Home</a> / <a href="#">Requests</a> / Request</div>
 		</div>-->
 		<table class="table table-bordered table-striped">
 			<tbody>
 				<tr>
-					<td scope="row" class="col-md-5"><a href="#">Home</a> / <a routerLink="/requests" routerLinkActive="active" class="btn btn-success">Requests</a> / Create Request</td>
-
-					<router-outlet></router-outlet>
+					<td scope="row" class="col-md-5"><a href="#">Home</a> / <a routerLink="/requests" routerLinkActive="active" class="btn btn-success">Requests</a> / Create Request
+					
+					<router-outlet></router-outlet></td>
 				</tr>
 			</tbody>
 		</table>
@@ -103,3 +103,6 @@
 		</div>
 	</body>
 </html>
+
+
+<h1 *ngIf="!userService.isLogged"> You Have to be Logged In to Access this Page </h1>

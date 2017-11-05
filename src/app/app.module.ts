@@ -10,6 +10,7 @@ import { RequestsModule } from './components/requests/requests.module';
 import { UserPageModule } from './components/user-page/user-page.module';
 import { RequestCreationModule } from './components/request-creation/request-creation.module';
 import { SingleRequestModule } from './components/single-request/single-request.module';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -22,7 +23,6 @@ import { RequestCreationRoutes } from './components/request-creation/request-cre
 import { LoginComponent } from './components/login/login.component';
 import { RequestCreationComponent } from './components/request-creation/request-creation.component';
 import { SingleRequestComponent } from './components/single-request/single-request.component';
-
 
 @NgModule({
   declarations: [
@@ -44,7 +44,8 @@ import { SingleRequestComponent } from './components/single-request/single-reque
     RequestsModule,
     UserPageModule,
     RequestCreationModule,
-    SingleRequestModule
+    SingleRequestModule,
+    HttpClientModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

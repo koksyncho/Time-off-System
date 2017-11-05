@@ -16,7 +16,7 @@
 		</style>
 	</head>
 	
-	<body>
+	<body  *ngIf="userService.isLogged">
 		<!--<div class="panel panel-default">
 			<div class="panel-body"><a href="#">Home</a> / <a href="#">Requests</a> / Request</div>
 		</div>-->
@@ -73,7 +73,7 @@
 				</tr>
 				<tr>
 					<th scope="row">Document</th>
-					<td><a class="download-link" (click)="download('variable')">Document for Print</a></td>
+					<td><div id="download-link"> <a  (click)="download('variable')">Document for Print</a> </div></td>
 				</tr>
 				<tr>
 					<th scope="row">Scan</th>
@@ -98,3 +98,5 @@
 		});
 	</script>    
 </html>
+
+<h1 *ngIf="!userService.isLogged"> You Have to be Logged In to Access this Page </h1>

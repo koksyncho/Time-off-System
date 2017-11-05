@@ -5,7 +5,7 @@ import { UserService } from '../../services/user.service';
 
 import { Router } from '@angular/router';
 
-import { Request } from '../../models/request'
+import { Request } from '../../models/request';
 
 @Component({
   selector: 'app-requests',
