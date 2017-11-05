@@ -2,7 +2,6 @@
     
     <a routerLink="/main-page" routerLinkActive="active">Home</a>
     <div *ngIf="userService.isLogged">
-        /
         <a routerLink="/register" routerLinkActive="active">Register A New User (Admin Option)</a>
         /
         <a routerLink="/calendar" routerLinkActive="active">Calendar Component</a>
@@ -17,9 +16,9 @@
         <a routerLink="/single-request" routerLinkActive="active">Single Request</a>
     </div>
 
-    <form #userForm="ngForm">
+    <!-- <form #userForm="ngForm">
         <div [hidden]="userForm.submitted" class="login-form">
-            <!-- <div id="navbar" class="collapse navbar-collapse">
+             --><div id="navbar" class="collapse navbar-collapse">
 
                 <ul class="nav navbar-nav navbar-right">
 
@@ -35,8 +34,8 @@
 
                     </li>
                 </ul>
-            </div> -->
-            <div id="navbar" class="collapse navbar-collapse">
+            </div>
+            <!-- <div id="navbar" class="collapse navbar-collapse">
 
                 <ul class="nav navbar-nav navbar-right">
 
@@ -57,9 +56,9 @@
                     </li>
                     
                 </ul>
-            </div>
-        </div>
-    </form>
+            </div> -->
+        <!-- </div>
+    </form> -->
 </nav>
 
 <router-outlet></router-outlet>

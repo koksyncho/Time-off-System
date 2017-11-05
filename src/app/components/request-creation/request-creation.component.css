@@ -2,6 +2,20 @@
 	padding-left: 10vw;
 }*/
 
+html, body {
+	height: 100%;
+}
+
+html {
+	display: table;
+	margin: auto;
+}
+
+body {
+	display: table-cell;
+	vertical-align: middle;
+}
+
 .borderless td, .borderless th {
 	border: none;
 }
