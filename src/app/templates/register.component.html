@@ -1,24 +1,67 @@
-<div align="center">
+<h1> Register a new User </h1>
 
-  <h3> Register </h3>
+<form #userForm="ngForm">
 
-  <div>
-    <form onsubmit="return false">
-      <p> Username: </p>
-      <input type="username" placeholder="Username" #username required />
+  <div class="form-group">
+    
+    <label for="username">Username</label>
+    <br>
+    <input id="username" name="username" required minlength="7" [(ngModel)]="user.name" #username="ngModel">
+    <br>
 
-      <p> Inventix Email: </p>
-      <input type="email" placeholder="Email" #email required />
+    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
 
-      <p> Password: </p>
-      <input type="password" placeholder="Password" #password required />
+      <div *ngIf="username.errors.required">
+        This field is required.
+      </div>
 
-      <p> Confirm Password: </p>
-      <input type="password" placeholder="Password" #password required />
+      <div *ngIf="username.errors.minlength">
+        Username must be at least 7 characters long.
+      </div>
 
-      <br>
-      <button (click)="register(username.value, email.value, password.value)"> Register </button>
-    </form>
+    </div>
+
+    <label for="email">Email</label>
+    <br>
+    <input  id="email" name="email" required minlength="7" [(ngModel)]="user.email" #email="ngModel" >
+    <br>
+
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+        
+      <div *ngIf="email.errors.required">
+        This field is required.
+      </div>
+
+      <div *ngIf="email.errors.minlength">
+        Email must be at least 7 characters long.
+      </div>
+
+    </div>
+
+    <label for="password">Password</label>
+    <br>
+    <input  id="password" name="password" required minlength="7" [(ngModel)]="user.password" #password="ngModel" >
+    <br>
+
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+        
+      <div *ngIf="password.errors.required">
+        This field is required.
+      </div>
+
+      <div *ngIf="password.errors.minlength">
+        Password must be at least 7 characters long.
+      </div>
+
+    </div>
+
   </div>
 
-</div>
+  <button type="submit" class="btn btn-default" [disabled]="userForm.invalid" (click)="register(username.value, email.value, password.value)"> Submit </button>
+  <button type="button" class="btn btn-default" (click)="userForm.resetForm({})"> Reset </button>
+
+  <div class="submitted-message" *ngIf="userForm.submitted">
+    <p style="white-space: pre-wrap">{{ userService.registerMessage }}</p>
+  </div>
+
+</form>

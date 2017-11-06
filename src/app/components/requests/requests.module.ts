@@ -13,6 +13,8 @@ import { RequestsComponent } from './requests.component';
     BrowserModule,
     RequestsRoutes
   ],
-  providers: []
+  providers: [
+  	UserService
+  ]
 })
 export class RequestsModule {}

@@ -17,8 +17,8 @@ export class URLs {
 	addNewRequestURL = this.serverURLforRequests+"/add";
 	updateRequestURL = this.serverURLforRequests+"/update/"; // add the id of the request
 	deleteRequestURL = this.serverURLforRequests+"/delete/"; // add the id of the request
-
+  
 	approveRequestURL = this.serverURLforAdmin+"/approve-request/"; //add the id of the request
 	disapproveRequestURL = this.serverURLforAdmin+"/disapprove-request/"; //add the id of the request
-	
+
 }
