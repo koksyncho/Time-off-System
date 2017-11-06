@@ -1,20 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RequestsRoutes } from './requests.routes';
+import { UserPageRoutes } from './user-page.routes';
 import { UserService } from '../../services/user.service';
 
-import { RequestsComponent } from './requests.component';
+import { UserPageComponent } from './user-page.component';
 
 @NgModule({
   declarations: [
-    RequestsComponent
+    UserPageComponent
   ],
   imports: [
     BrowserModule,
-    RequestsRoutes
+    UserPageRoutes
   ],
   providers: [
-  	UserService
+    UserService
   ]
 })
-export class RequestsModule {}
+export class UserPageModule {}

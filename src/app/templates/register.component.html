@@ -3,10 +3,10 @@
 <form #userForm="ngForm">
 
   <div class="form-group">
-
+    
     <label for="username">Username</label>
     <br>
-    <input  id="username" name="username" required minlength="7" [(ngModel)]="user.name" #username="ngModel" >
+    <input id="username" name="username" required minlength="7" [(ngModel)]="user.name" #username="ngModel">
     <br>
 
     <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">

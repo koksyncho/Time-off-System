@@ -1,20 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RequestsRoutes } from './requests.routes';
+import { SingleRequestRoutes } from './single-request.routes';
 import { UserService } from '../../services/user.service';
 
-import { RequestsComponent } from './requests.component';
+import { SingleRequestComponent } from './single-request.component';
 
 @NgModule({
   declarations: [
-    RequestsComponent
+    SingleRequestComponent
   ],
   imports: [
     BrowserModule,
-    RequestsRoutes
+    SingleRequestRoutes
   ],
   providers: [
   	UserService
   ]
 })
-export class RequestsModule {}
+export class SingleRequestModule {}
