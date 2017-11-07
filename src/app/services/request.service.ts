@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers} from '@angular/http';
 import { HttpClient } from '@angular/common/http';
@@ -64,4 +64,4 @@ export class RequestService
 		return result;
 	}
 
-}
+}*/
