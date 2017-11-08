@@ -16,7 +16,7 @@ export class AdminService
 
 	constructor(private http: HttpClient, private userService: UserService) {}
 
-	private approveTimeOff(userId: number, timeOffId:number ):string
+	public approveTimeOff(userId: number, timeOffId:number ):string
 	{
 		let result:string;
 		this.http.put<StatusUpdateResults>(this.urls.approveRequestURL+timeOffId.toString, {}).subscribe(
@@ -24,7 +24,7 @@ export class AdminService
 		return result;
 	}
 
-	private disapproveTimeOff(userId: number, timeOffId:number ):string
+	public disapproveTimeOff(userId: number, timeOffId:number ):string
 	{
 		let result:string;
 		this.http.put<StatusUpdateResults>(this.urls.disapproveRequestURL+timeOffId.toString, {}).subscribe(
@@ -32,12 +32,12 @@ export class AdminService
 		return result;
 	}
 
-	private addNewUser(admin:boolean, name:string, email:string, password:string, egn:string, pto:number)
+	public addNewUser(admin:boolean, name:string, email:string, password:string, egn:string, pto:number)
 	{
 		this.userService.register(admin, name, email, password, egn, pto);
 	}
 
-	private deleteUser(id:number): string
+	public deleteUser(id:number): string
 	{
 		let result:string;
 		this.http.put<StatusUpdateResults>(this.urls.deleteUserURL+id.toString, {}).subscribe(

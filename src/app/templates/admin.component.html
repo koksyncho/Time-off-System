@@ -5,7 +5,36 @@
 </head>
 <body>
 	<table>
-		<!-- Here we are going to display all the requests with buttons approve and disapprove -->
+
+		<div>
+
+			<div>
+				<p>Input the id of the user:</p>
+				<input type="number" name="idOfUser" #idOfUser>
+			</div>
+
+			<div>
+				<p>Input the id of the timeOff:</p>
+				<input type="number" name="idOfTimeOff" #idOfTimeOff>
+			</div>
+
+			<button onclick="approveTimeOff(idOfUser.value, idOfTimeOff.value)">
+				Approve the time off request
+			</button>
+
+			<button onclick="disapproveTimeOff(idOfUser.value, idOfTimeOff.value)">
+				Dispprove the time off request
+			</button>
+
+		</div>
+
+		 <a routerLink="/register" routerLinkActive="active">Go to registering a user</a>
+
+		 <div>
+		 	<input type="id" name="idOfUser" #idOfUser>
+		 	<button onclick="deleteUser(idOfUser.value)"></button>
+		 </div>
+		
 	</table>
 </body>
 </html>>

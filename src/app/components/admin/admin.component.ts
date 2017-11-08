@@ -11,8 +11,6 @@ import { Admin } from '../../models/admin';
 export class AdminComponent implements OnInit 
 {
 
-	adminUser:Admin = Admin.getInstance();
-
 
   constructor(private adminService: AdminService) 
   { 
@@ -23,4 +21,25 @@ export class AdminComponent implements OnInit
   {
   }
 
+  public approveTimeOff(userId:number, timeOffId:number)
+  {
+    this.adminService.approveTimeOff(userId, timeOffId);
+
+  }
+
+  public disapproveTimeOff(userId:number, timeOffId:number)
+  {
+    this.adminService.disapproveTimeOff(userId, timeOffId);
+
+  }
+
+  public addNewUser(admin:boolean, name:string, email:string, password:string, egn:string, pto:number)
+  {
+    this.adminService.addNewUser(admin, name, email, password, egn, pto);
+  }
+
+  public deleteUser(id:number)
+  {
+    this.adminService.deleteUser(id);
+  }
 }
