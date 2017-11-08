@@ -1,4 +1,5 @@
 import { Request } from './request';
+import { User } from './user';
 
 
 export interface LoginResults
@@ -29,4 +30,14 @@ export interface UpdateRequestResults
 export interface DeleteRequestResults
 {
 	results: string;
+}
+
+export interface idRequestResults
+{
+	results: number;
+}
+
+export interface userRequestResult
+{
+	results: User;
 }
