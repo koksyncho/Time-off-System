@@ -1,4 +1,4 @@
-<div class="container" *ngIf="userService.isLogged">
+
   <h3>Requests</h3>
 
   <a routerLink="/user-page" routerLinkActive="active" class="btn btn-primary">User Page</a>
@@ -12,12 +12,12 @@
     <a class="btn btn-success" href="#/approved" role="button">Approved</a>
     <a class="btn btn-danger" href="#/rejected" role="button">Rejected</a>
   </div>
-  <p class="text-center">You have <b>{{ pto }}</b> days available for Paid Time Off.</p>
+  <p class="text-center">You have <b>{{ user.pto }}</b> days available for Paid Time Off.</p>
   Showing <b>1-{{ requests.length }}</b> of <b>{{ requests.length }}</b> items
   <table class="table table-bordered">
     <tr>
       <td><b>#</b></td>
-      <td *ngIf="admin"><b>Person's Name</b></td>
+      <td *ngIf="!admin"><b>{{user.name}}</b></td>
       <td class="blue"><b>Absence Type</b></td>
       <td><b>Days</b></td>
       <td class="blue"><b>Dates</b></td>
@@ -34,7 +34,3 @@
       <td>{{ request.status }}</td>
     </tr>
   </table>
-  <p class="text-center">You have <b>{{ pto }}</b> days available for Paid Time Off.</p>
-</div>
-
-<h1 *ngIf="!userService.isLogged"> You Have to be Logged In to Access this Page </h1>
