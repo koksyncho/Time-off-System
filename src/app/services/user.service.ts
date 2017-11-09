@@ -5,12 +5,13 @@ import { HttpClient } from '@angular/common/http';
 
 import { User } from '../models/user';
 import { URLs } from '../models/URLs';
-import { LoginResults, RegisterResults } from '../models/expectedResponse';
+import { LoginResults, RegisterResults, idRequestResults, userRequestResult } from '../models/expectedResponse';
 
 @Injectable()
 export class UserService {
     
     urls = new URLs();
+    private userIn:User;
 
     constructor(private http: HttpClient) {
     }
@@ -23,10 +24,13 @@ export class UserService {
         let resultsOfLogin:string;
 
         this.http.post<LoginResults>(this.urls.loginURL, bodyOfRequest).subscribe(
-            data => { let resultOfLogin = data.results; });
+            data => { resultsOfLogin = data.results; });
 
         if(resultsOfLogin === "login successfull")
         {
+            
+            this.rememberUser(username);
+
             return true;
         }else{
             return false;
@@ -48,7 +52,7 @@ export class UserService {
         }
         let result:string;
         this.http.post<RegisterResults>(this.urls.registerURL, body).subscribe(
-            data => { let result = data.results; });
+            data => { result = data.results; });
         if(result.length===0)
         {
             return true;
@@ -56,5 +60,28 @@ export class UserService {
             return false;
 
         }
+    }
+
+    public setCurrentUser(user:User)
+    {
+        this.userIn = user;
+    }
+
+    public getCurrentUser():User
+    {
+        return this.userIn;
+    }
+
+    public rememberUser(username:string)
+    {
+        let id:number;
+        this.http.post<idRequestResults>(this.urls.getIDbyUsernameURL+username, {}).subscribe(
+            data => { id = data.results; });
+
+        let user:User;
+        this.http.post<userRequestResult>(this.urls.getUserByIDURL+id, {}).subscribe(
+            data => { user = data.results; });
+
+        this.setCurrentUser(user);
     }
 }
