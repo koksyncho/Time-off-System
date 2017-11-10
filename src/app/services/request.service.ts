@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers} from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import { 
 	AllRequestsIterable, 
@@ -15,16 +17,35 @@ import { Request } from '../models/request';
 export class RequestService 
 {
 	urls = new URLs();
+	requests:Array<Request>;
 
-	constructor(private http: HttpClient) {}
+	constructor(private http: Http) {
+		this.requests = new Array<Request>();
+	}
 
-	public getAllRequests():Iterable<Request>
+	public getAllRequests():Observable<Request[]>
 	{
-		let result:Iterable<Request>;
-		this.http.get<AllRequestsIterable>(this.urls.getAllRequestURL, {}).subscribe(
-            data => { let result = data.results; });
+		var body = '';
+		var headers = new Headers();
+		headers.append('Content-type', 'application/x-www-form-urlencoded');
 
-		return result;
+		return this.http.get(this.urls.getAllRequestURL, {headers: headers})
+					.map(this.extractData)
+					.map((requests: Array<Request>) =>
+						{
+							let result:Array<Request> = [];
+							if(requests)
+							{
+								requests.forEach((request) =>
+									{
+										result.push(request);
+									});
+
+								return result;
+							}
+						
+						});
+		
 	}
 
 	public updateRequest(    	
@@ -37,31 +58,34 @@ export class RequestService
         note: string,
         submit: string,
         status: string
-        ):string
+        )
 	{
-		let result:Map<String, Set<String>>;
+		var request = new Request(id, owner, type, days, dates,reason, note, submit, status);
 
-		let body = {
-			"request": new Request(id, owner, type, days, dates,reason, note, submit, status),
-		}
+		let body = JSON.stringify(request);
 
-		this.http.put<UpdateRequestResults>(this.urls.getAllRequestURL, body).subscribe(
-            data => { let result = data.results; });
-		if(result===null)
-		{
-			return "Successfully saved"
-		}else{
-			return "Not saved";
-		}
+		var headers = new Headers();
+		headers.append('Content-type', 'application/x-www-form-urlencoded');
+			
+
+		this.http.put(this.urls.updateRequestURL, body, {headers: headers});
+
 
 	}
 
-	public deleteRequest(id:number):string
+	public deleteRequest(id:number)
 	{
-		let result:string;
-		this.http.delete<DeleteRequestResults>(this.urls.deleteRequestURL+id.toString, {}).subscribe(
-            data => { let result = data.results; });
-		return result;
+
+		var headers = new Headers();
+		headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+		this.http.delete(this.urls.deleteRequestURL+id.toString, );
+	}
+
+	private extractData(response:Response)
+	{
+		let body = response.json();
+		return body;
 	}
 
 }

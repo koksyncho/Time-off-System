@@ -2,8 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RequestsRoutes } from './requests.routes';
 import { UserService } from '../../services/user.service';
+import { HttpModule, JsonpModule} from '@angular/http';
+
 
 import { RequestsComponent } from './requests.component';
+import { RequestService } from '../../services/request.service';
 
 @NgModule({
   declarations: [
@@ -11,10 +14,12 @@ import { RequestsComponent } from './requests.component';
   ],
   imports: [
     BrowserModule,
-    RequestsRoutes
+    RequestsRoutes,
+    HttpModule,
+    JsonpModule
   ],
   providers: [
-  	UserService
+  	RequestService
   ]
 })
 export class RequestsModule {}

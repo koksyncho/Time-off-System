@@ -23,7 +23,6 @@ export class RequestsComponent implements OnInit
 
   private requests:Array<Request>;
 
-  requestsIterable;
   pto:number; //Paid Time Off (available)
   admin:boolean; //if the user is an admin or not
 
@@ -46,12 +45,14 @@ export class RequestsComponent implements OnInit
 
   private getAllRequests()
   {
-    this.requestsIterable = this.requestService.getAllRequests;
-
-    for(let request of this.requestsIterable)
-    {
-      this.requests.fill(request);
-    }
+    this.requestService.getAllRequests().subscribe(
+        requests => {
+          if(requests.length!=0)
+          {
+            this.requests = requests;
+          }
+        }
+      );
 
   }
 

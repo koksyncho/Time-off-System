@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers} from '@angular/http';
-import { HttpClient } from '@angular/common/http';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import { User } from '../models/user';
 import { URLs } from '../models/URLs';
@@ -12,54 +14,69 @@ export class UserService {
     
     urls = new URLs();
     private userIn:User;
+    private users:Array<User>;
+    private canLogIn:string;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: Http) {
     }
 
-    login(username: string, password: string): boolean {
-        let bodyOfRequest = {
-            "name": username,
-            "password": password
-        };
+    login(username: string, password: string){
+        let bodyOfRequest = 'name='+username+'&password='+password;
+
+        var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
         let resultsOfLogin:string;
 
-        this.http.post<LoginResults>(this.urls.loginURL, bodyOfRequest).subscribe(
-            data => { resultsOfLogin = data.results; });
+        this.http.post(this.urls.loginURL, bodyOfRequest, {headers: headers})
+                        .map(this.extractData)
+                        .map((canLogIn:string) =>
+                        {
+                            let result:boolean;
+                            if(canLogIn.length!=0)
+                            {
+                                if(canLogIn==="login successfull")
+                                {
+                                    result = true;
+                                }
 
-        if(resultsOfLogin === "login successfull")
-        {
-            
-            this.rememberUser(username);
-
-            return true;
-        }else{
-            return false;
-        }
+                                return result;
+                            }
+                        
+                        }).subscribe(
+                            result => {
+                                if(result)
+                                {
+                                    this.rememberUser(username);
+                                }
+                            }
+      );
         
     }
 
 
-    //this method returns false if it cannot create the user
-    register(admin:boolean, name:string, email:string, password:string, egn:string, pto:number):boolean
+    register(admin:boolean, name:string, email:string, password:string, egn:number, pto:number)
     {
-        let body = {
-            "admin": admin,
-            "name": name,
-            "email": email,
-            "password": password,
-            "egn": egn,
-            "pto": pto
-        }
-        let result:string;
-        this.http.post<RegisterResults>(this.urls.registerURL, body).subscribe(
-            data => { result = data.results; });
-        if(result.length===0)
-        {
-            return true;
-        }else{
-            return false;
+        var userToAdd = new User(admin,name,email,password,egn,pto);
 
-        }
+        let body = JSON.stringify(userToAdd);
+
+        var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+        return this.http.post(this.urls.registerURL, body, {headers:headers})
+                    .map(this.extractData)
+                    .map((errors:Map<String, Set<String>>) =>
+                        {
+                            let result:boolean;
+                            if(!errors)
+                            {
+                               return false;
+                            }else{
+                                return true;
+                            }
+                        
+                        });
     }
 
     public setCurrentUser(user:User)
@@ -74,14 +91,49 @@ export class UserService {
 
     public rememberUser(username:string)
     {
-        let id:number;
-        this.http.post<idRequestResults>(this.urls.getIDbyUsernameURL+username, {}).subscribe(
-            data => { id = data.results; });
+        var id:number;
+
+        var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+        this.http.post(this.urls.getIDbyUsernameURL+username, '', {headers: headers})
+                    .map(this.extractData)
+                    .map((id:number) =>
+                        {
+                            if(id!=null)
+                            {
+                               return id;
+                            }
+                        });
 
         let user:User;
-        this.http.post<userRequestResult>(this.urls.getUserByIDURL+id, {}).subscribe(
-            data => { user = data.results; });
+
+        var headersForGettingTheUser = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+        this.http.post(this.urls.getUserByIDURL+id, {})
+                    .map(this.extractData)
+                    .map((user:User) =>
+                        {
+                            if(user!=null)
+                            {
+                               return user;
+                            }
+                        }).subscribe(
+                            user => {
+                              if(user!=null)
+                              {
+                                  this.userIn = user;
+                              }
+                        }
+      );
 
         this.setCurrentUser(user);
+    }
+
+    private extractData(response:Response)
+    {
+        let body = response.json();
+        return body;
     }
 }
