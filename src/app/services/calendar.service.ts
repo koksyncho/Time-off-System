@@ -65,6 +65,8 @@ export class CalendarService {
     events: CalendarEvent[] = [];
 
     activeDayIsOpen = true;
+    
+    requestType: string;
 
     constructor(private modal: NgbModal) {}
 
@@ -92,14 +94,65 @@ export class CalendarService {
     }
 
     addEvent() {
-        const color = new Color('#cccccc', '#cccccc');
-        this.colors.push(color);
+        this.pushEvent('New Event', this.viewDate, this.newColor('#cccccc'));
+        this.refresh.next();
+    }
+    
+    addEventRC(date: Date) {
+        let canAdd = true;
+        let selectedDate: number = this.intifyDate(date);
+        let index: number;
+        let eventsIsFull = this.events.length >= 10;
 
+        for (let i = 0; i < this.events.length; i++) {
+            if (selectedDate === this.intifyDate(this.events[i].start)) {
+                canAdd = false;
+                index = i;
+            }
+        }
+
+        if (canAdd) {
+            if (this.dayCanBeSelected(selectedDate) && !eventsIsFull) {
+                this.pushEvent('PTO', date, this.newColor('#32779e'));
+            }
+        } else {
+            this.events.splice(index, 1);
+        }
+
+        this.refresh.next();
+    }
+    
+    dayCanBeSelected(selectedDate) {
+        let dayCanBeSelected: boolean;
+        
+        switch(this.requestType) {
+            case 'PTO1': {
+                dayCanBeSelected = selectedDate > this.intifyDate(this.viewDate);
+                break;
+            }
+            case 'PTO2': {
+                dayCanBeSelected = selectedDate <= this.intifyDate(this.viewDate);
+                break;
+            }
+            default: {
+                dayCanBeSelected = false;
+                break;
+            }
+        }
+        
+        return dayCanBeSelected;
+    }
+    
+    setRequestType(requestType: string) {
+        this.requestType = requestType;
+    }
+    
+    pushEvent(title: string, date: Date, color: Color) {
         this.events.push({
-            title: 'New event',
+            title: title,
 
-            start: startOfDay(new Date()),
-            end: endOfDay(new Date()),
+            start: startOfDay(date),
+            end: endOfDay(date),
 
             color: color,
             draggable: true,
@@ -109,8 +162,70 @@ export class CalendarService {
                 afterEnd: true
             }
         });
-
-        this.refresh.next();
+    }
+    
+    newColor(color: string) {
+        let colorObj = new Color(color, color);
+        this.colors.push(colorObj);
+        return colorObj;
+    }
+    
+    intifyDate(date: Date) {
+        let month = date.toDateString().substring(4, 7);
+        let dateNumber = +date.toDateString().substring(8, 10);
+        
+        switch(month) {
+            case 'Jan': {
+                dateNumber += 100;
+                break;
+            }
+            case 'Feb': {
+                dateNumber += 200;
+                break;
+            }
+            case 'Mar': {
+                dateNumber += 300;
+                break;
+            }
+            case 'Apr': {
+                dateNumber += 400;
+                break;
+            }
+            case 'May': {
+                dateNumber += 500;
+                break;
+            }
+            case 'Jun': {
+                dateNumber += 600;
+                break;
+            }
+            case 'Jul': {
+                dateNumber += 700;
+                break;
+            }
+            case 'Aug': {
+                dateNumber += 800;
+                break;
+            }
+            case 'Sep': {
+                dateNumber += 900;
+                break;
+            }
+            case 'Oct': {
+                dateNumber += 1000;
+                break;
+            }
+            case 'Nov': {
+                dateNumber += 1100;
+                break;
+            }
+            case 'Dec': {
+                dateNumber += 1200;
+                break;
+            }
+        }
+        
+        return dateNumber;
     }
 
 }

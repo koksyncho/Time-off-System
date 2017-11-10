@@ -1,9 +1,8 @@
-<h1> Login </h1>
-
 <form #userForm="ngForm">
 
-  <div [hidden]="userForm.submitted">
-
+  <div [hidden]="userForm.submitted" class="login-form">
+    <h1> Login </h1>
+    
     <div class="form-group">
 
       <label for="email">Email</label>
@@ -49,7 +48,7 @@
   <div class="submitted-message" *ngIf="userForm.submitted">
     <p style="white-space: pre-wrap">{{ userService.loginMessage }}</p>
     <button *ngIf="!userService.isLogged" (click)="userForm.resetForm({})">Reset</button>
-    <button *ngIf="userService.isLogged" (click)="logOut(userForm)">Log Out</button>
+    <button *ngIf="userService.isLogged" (click)="logOut(userForm)" class="btn btn-warning">Log Out</button>
   </div>
 
 </form>

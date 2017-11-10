@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { CalendarService } from '../../services/calendar.service';
 
 import { CalendarComponent } from './calendar.component';
+import { RcCalendarComponent } from './rc-calendar.component';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +16,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
-    CalendarComponent
+    CalendarComponent,
+    RcCalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +30,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ],
   providers: [UserService, CalendarService],
-  exports: [CalendarComponent]
+  exports: [
+    CalendarComponent,
+    RcCalendarComponent
+  ]
 })
 export class CalModule {}
