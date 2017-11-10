@@ -14,35 +14,35 @@ export class AdminService
 {
 	urls = new URLs();
 
-	constructor(private http: HttpClient, private userService: UserService) {}
+	constructor(private http: Http, private userService: UserService) {}
 
-	public approveTimeOff(userId: number, timeOffId:number ):string
+	public approveTimeOff(userId: number, timeOffId:number )
 	{
-		let result:string;
-		this.http.put<StatusUpdateResults>(this.urls.approveRequestURL+timeOffId.toString, {}).subscribe(
-            data => { let result = data.results; });
-		return result;
+		var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+		this.http.put(this.urls.approveRequestURL+timeOffId.toString, '' ,{headers:headers});
 	}
 
-	public disapproveTimeOff(userId: number, timeOffId:number ):string
+	public disapproveTimeOff(userId: number, timeOffId:number )
 	{
-		let result:string;
-		this.http.put<StatusUpdateResults>(this.urls.disapproveRequestURL+timeOffId.toString, {}).subscribe(
-            data => { let result = data.results; });
-		return result;
+		var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+		this.http.put(this.urls.disapproveRequestURL+timeOffId.toString, '' ,{headers:headers});
 	}
 
-	public addNewUser(admin:boolean, name:string, email:string, password:string, egn:string, pto:number)
+	public addNewUser(admin:boolean, name:string, email:string, password:string, egn:number, pto:number)
 	{
 		this.userService.register(admin, name, email, password, egn, pto);
 	}
 
-	public deleteUser(id:number): string
+	public deleteUser(id:number)
 	{
-		let result:string;
-		this.http.put<StatusUpdateResults>(this.urls.deleteUserURL+id.toString, {}).subscribe(
-            data => { let result = data.results; });
-		return result;
+		var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+		this.http.delete(this.urls.deleteUserURL+id.toString, {headers: headers} );
 	}
 
 }
