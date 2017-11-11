@@ -1,0 +1,10 @@
+#download-link {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+#download-link:hover {
+	text-decoration: none;
+    text-shadow: 0.1rem 0.1rem 0.1rem #555;
+}
