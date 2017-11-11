@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit
 
   }
 
-  public addNewUser(admin:boolean, name:string, email:string, password:string, egn:string, pto:number)
+  public addNewUser(admin:boolean, name:string, email:string, password:string, egn:number, pto:number)
   {
     this.adminService.addNewUser(admin, name, email, password, egn, pto);
   }

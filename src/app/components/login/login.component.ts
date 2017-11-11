@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   public logOut(userForm: any) {
-    this.userService.logOut();
+    this.userService.rememberUser(null);
     userForm.resetForm({});
   }
 
