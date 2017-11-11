@@ -1,79 +1,139 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { Http, Response, Headers} from '@angular/http';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import { User } from '../models/user';
+import { URLs } from '../models/URLs';
+import { LoginResults, RegisterResults, idRequestResults, userRequestResult } from '../models/expectedResponse';
 
 @Injectable()
 export class UserService {
+    
+    urls = new URLs();
+    private userIn:User;
+    private users:Array<User>;
+    private canLogIn:string;
 
-    users: User[];
-
-    constructor() {
-        this.users = new Array<User>();
-
-        this.initLocalStorage();
+    constructor(private http: Http) {
     }
 
-    private initLocalStorage() {
-        this.users = JSON.parse(localStorage.getItem('storage'));
+    login(username: string, password: string){
+        let bodyOfRequest = 'name='+username+'&password='+password;
 
-        if (localStorage.getItem('storage') === null) {
-            this.users = [{'username': 'Test', 'email': 'Test', 'password': 'test'}];
-        } else if (this.users.length === 0) {
-            this.users = [{'username': 'Test', 'email': 'Test', 'password': 'test'}];
-        }
+        var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+        let resultsOfLogin:string;
+
+        this.http.post(this.urls.loginURL, bodyOfRequest, {headers: headers})
+                        .map(this.extractData)
+                        .map((canLogIn:string) =>
+                        {
+                            let result:boolean;
+                            if(canLogIn.length!=0)
+                            {
+                                if(canLogIn==="login successfull")
+                                {
+                                    result = true;
+                                }
+
+                                return result;
+                            }
+                        
+                        }).subscribe(
+                            result => {
+                                if(result)
+                                {
+                                    this.rememberUser(username);
+                                }
+                            }
+      );
+        
     }
 
-    login(username: string, password: string): Promise<boolean> {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.credentialsAreCorrect(i, username, password)) {
-                return Promise.resolve(true);
-            }
-        }
 
-        return Promise.resolve(false);
+    register(admin:boolean, name:string, email:string, password:string, egn:number, pto:number)
+    {
+        var userToAdd = new User(admin,name,email,password,egn,pto);
+
+        let body = JSON.stringify(userToAdd);
+
+        var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+        return this.http.post(this.urls.registerURL, body, {headers:headers})
+                    .map(this.extractData)
+                    .map((errors:Map<String, Set<String>>) =>
+                        {
+                            let result:boolean;
+                            if(!errors)
+                            {
+                               return false;
+                            }else{
+                                return true;
+                            }
+                        
+                        });
     }
 
-    private credentialsAreCorrect(i: any, username: any, password: any): boolean {
-        return this.users[i].username === username && this.users[i].password === password;
+    public setCurrentUser(user:User)
+    {
+        this.userIn = user;
     }
 
-    register(username: string, email: string, password: string) {
-        if (!this.userAlreadyExists(username, password)) {
-            this.createNewUser(username, email, password);
-        }
+    public getCurrentUser():User
+    {
+        return this.userIn;
     }
 
-    private userAlreadyExists(username: string, password: string): boolean {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === username) {
-                return true;
-            }
-        }
-        return false;
+    public rememberUser(username:string)
+    {
+        var id:number;
+
+        var headers = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+        this.http.post(this.urls.getIDbyUsernameURL+username, '', {headers: headers})
+                    .map(this.extractData)
+                    .map((id:number) =>
+                        {
+                            if(id!=null)
+                            {
+                               return id;
+                            }
+                        });
+
+        let user:User;
+
+        var headersForGettingTheUser = new Headers();
+        headers.append('Content-type', 'application/x-www-form-urlencoded');
+
+        this.http.post(this.urls.getUserByIDURL+id, {})
+                    .map(this.extractData)
+                    .map((user:User) =>
+                        {
+                            if(user!=null)
+                            {
+                               return user;
+                            }
+                        }).subscribe(
+                            user => {
+                              if(user!=null)
+                              {
+                                  this.userIn = user;
+                              }
+                        }
+      );
+
+        this.setCurrentUser(user);
     }
 
-    private createNewUser(username: any, email: any, password: any) {
-        const user = new User(username, email, password);
-        this.users.push(user);
-
-        // Your editor might mark this guy with a red wavey line at the bottom:
-        let users;
-        // don't touch him, though. He's perfect.
-
-        this.addObjectToLocalStorage(users, user);
+    private extractData(response:Response)
+    {
+        let body = response.json();
+        return body;
     }
-
-    private addObjectToLocalStorage(objects: any, object: any) {
-        if (localStorage.getItem('storage') === null) {
-            objects = [];
-            objects.push(object);
-            localStorage.setItem('storage', JSON.stringify(objects));
-        } else {
-            objects = JSON.parse(localStorage.getItem('storage'));
-            objects.push(object);
-            localStorage.setItem('storage', JSON.stringify(objects));
-        }
-    }
-
 }

@@ -1,0 +1,19 @@
+
+<img src="../../assets/images/img_avatar_man.png" alt="Avatar" style="width:30%">
+	<div class="container">
+	    <h3><b>{{getCurrUser().name}}</b></h3> 
+  	</div>
+  	<div class="statistics-panel">
+	  	<div class="container">
+		    <h4><b>Email</b></h4> 
+		    <p>{{getCurrUser().email}}</p> 
+	  	</div>
+	  	<div class="container">
+		    <h4><b>EGN</b></h4> 
+		    <p>{{getCurrUser().egn}}</p> 
+	  	</div>
+	</div>
+	
+	<a routerLink="/requests" routerLinkActive="active" class="btn btn-success">Requests</a>
+	
+<router-outlet></router-outlet>
