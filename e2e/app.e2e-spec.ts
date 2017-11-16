@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('time-off-system App', () => {
+describe('stable-login App', () => {
   let page: AppPage;
 
   beforeEach(() => {
