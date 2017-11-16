@@ -4,7 +4,7 @@ Following this tutorial:
 STEP 1.
 Download the Angular and Spring Boot parts:
 	Angular: https://github.com/koksyncho/Time-off-System/tree/kaio
-	Spring Boot: 
+	Spring Boot: https://github.com/emilsergiev/time-off-system-backend/tree/kaio
 	(Or download the zips sent in our messenger group)
 
 STEP 2. MySQL Database Schema
