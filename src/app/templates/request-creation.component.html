@@ -1,0 +1,7 @@
+<html>
+	<body *ngIf="userService.isLogged">
+		<app-rc-calendar></app-rc-calendar>
+	</body>
+</html>
+
+<h1 *ngIf="!userService.isLogged"> You Have to be Logged In to Access this Page </h1>

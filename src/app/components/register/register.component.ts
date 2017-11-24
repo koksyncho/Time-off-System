@@ -7,11 +7,10 @@ import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 
 @Component({
-   selector: 'app-user',
-   templateUrl: '../../templates/user.component.html',
-   styleUrls: ['./user.component.css']
+   selector: 'app-register',
+   templateUrl: '../../templates/register.component.html'
 })
-export class UserComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   // Component properties
   allUsers: User[];
