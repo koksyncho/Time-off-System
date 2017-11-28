@@ -70,6 +70,10 @@ export class CalendarService {
 
     constructor(private modal: NgbModal) {}
 
+    reset() {
+        this.events.splice(0,this.events.length);
+    }
+
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }) {
         if (isSameMonth(date, this.viewDate)) {
             if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
@@ -99,6 +103,7 @@ export class CalendarService {
     }
     
     addEventRC(date: Date) {
+        console.log("addEventRC()")
         let canAdd = true;
         let selectedDate: number = this.intifyDate(date);
         let index: number;
@@ -112,14 +117,19 @@ export class CalendarService {
         }
 
         if (canAdd) {
+            console.log("inside if(canAdd)");
             if (this.dayCanBeSelected(selectedDate) && !eventsIsFull) {
+                console.log("inside if(canbeselected)");
                 this.pushEvent('PTO', date, this.newColor('#32779e'));
+                console.log("event pushed");
             }
         } else {
             this.events.splice(index, 1);
         }
 
         this.refresh.next();
+
+        console.log(this.requestType);
     }
     
     dayCanBeSelected(selectedDate) {
@@ -140,8 +150,7 @@ export class CalendarService {
             }
         }
         
-        // return dayCanBeSelected;
-        return true;
+        return dayCanBeSelected;
     }
     
     setRequestType(requestType: string) {

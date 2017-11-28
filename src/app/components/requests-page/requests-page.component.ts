@@ -8,14 +8,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 
 @Component({
-  selector: 'app-request-creation',
-  templateUrl: '../../templates/request-creation.component.html',
-  styleUrls: ['./request-creation.component.css']
+  selector: 'app-requests-page',
+  templateUrl: '../../templates/requests-page.component.html',
+  styleUrls: ['./requests-page.component.css']
 })
-export class RequestCreationComponent implements OnInit {
+export class RequestsPageComponent implements OnInit {
 
-  recieverEmail = "wibo0126@gmail.com";
-  
   // Component properties
   allRequests: Request[];
   statusCode: number;
@@ -51,43 +49,23 @@ export class RequestCreationComponent implements OnInit {
       );
   }
 
-  dates: string;
-  days: string;
-  note: string;
-  reason: string;
-
-  initDatesAndDays() {
-    let events = this.calService.events;
-    let dates: string;
-
-    for (let i = 0; i < events.length; i++) {
-      dates += events[i].start.toDateString() + "; ";
-      console.log(events[i].start.toDateString());
-    }
-
-    this.dates = dates;
-  }
-
   // Handle create and update user
   onRequestFormSubmit() {
-    this.initDatesAndDays();
-
-    console.log("in onRequestFormSubmit()");
     this.processValidation = true;
 
-    // if (this.requestForm.invalid) {
-    //       return; // Validation failed, exit from method.
-    // }
+    if (this.requestForm.invalid) {
+          return; // Validation failed, exit from method.
+    }
 
     // Form is valid, now perform create or update
     this.preProcessConfigurations();
 
-    console.log("requestidtoupdate = " + this.requestIdToUpdate);
-    if (this.requestIdToUpdate === null) {
-      console.log("in handle create request if")
+    let dates = this.requestForm.get('dates').value.trim();
+    let days = this.requestForm.get('days').value.trim();
 
+    if (this.requestIdToUpdate === null) {
       // Handle create request
-      let request = new Request(null, this.dates, this.days, this.note, this.reason, "unapproved", "what dis", this.requestType, "4");
+      let request = new Request(null, dates, days, "example note", "example reason", "example status", "example submit_time", this.requestType, "4");
 
       this.requestService.createRequest(request)
         .subscribe(successCode => {
@@ -95,16 +73,9 @@ export class RequestCreationComponent implements OnInit {
           this.getAllRequests();
           this.backToCreateRequest();
       }, errorCode => this.statusCode = errorCode);
-
-      this.requestService.sendEmail(
-        this.recieverEmail, 
-        this.requestType + " for Name of Person Placeholder", 
-        "Request for " + this.requestType + 
-          " for name of person placeholder for the dates:" + this.dates + 
-          "\n Reason: \n" + this.reason).subscribe();
     } else {
       // Handle update request
-      let request = new Request(null, this.dates, this.days, this.note, this.reason, "unapproved", "what dis", this.requestType, "4");
+      let request = new Request(this.requestIdToUpdate, dates, days, "example note", "example reason", "example status", "example submit_time", this.requestType, "4");
 
       this.requestService.updateRequest(request)
         .subscribe(successCode => {

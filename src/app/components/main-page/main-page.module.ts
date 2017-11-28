@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LoginRoutes } from './login.routes';
+import { MainPageRoutes } from './main-page.routes';
 import { UserService } from '../../services/user.service';
 
-import { LoginComponent } from './login.component';
+import { MainPageComponent } from './main-page.component';
 
 @NgModule({
   declarations: [
@@ -12,11 +12,11 @@ import { LoginComponent } from './login.component';
   ],
   imports: [
     BrowserModule,
-    LoginRoutes,
+    MainPageRoutes,
     FormsModule
   ],
   providers: [
     UserService
   ]
 })
-export class LoginModule {}
+export class MainPageModule {}
