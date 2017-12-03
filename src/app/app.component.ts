@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { UserService } from './services/user.service';
 
 @Component({
    selector: 'app-root',
-   template: `
-				<app-article></app-article>
-             `
+   templateUrl: './app.component.html'
 })
-export class AppComponent { 
+export class AppComponent {
+    constructor(private userService: UserService) {}
 }
-    

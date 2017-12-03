@@ -2,11 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>MyApp</title>
+  <email><!-- MyApp --></email>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link href="https://unpkg.com/bootstrap@4.0.0-beta/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/angular-calendar@0.21.3/dist/css/angular-calendar.css" rel="stylesheet">
+  <script src="https://unpkg.com/zone.js@0.8.18"></script>
+  <script src="https://unpkg.com/zone.js@0.8.18/dist/long-stack-trace-zone.js"></script>
+  <script src="https://unpkg.com/reflect-metadata@0.1.10"></script>
+  <script src="https://unpkg.com/systemjs@0.19/dist/system.js"></script>
+  <script src="config.js"></script>
+  <script>
+    System.import('app').catch(console.error.bind(console));
+  </script>
+
+  <style type="text/css">body{ font-size: 15px; }</style>
 </head>
 <body>
   <app-root>Loading...</app-root>

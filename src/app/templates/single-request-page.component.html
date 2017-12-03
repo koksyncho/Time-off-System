@@ -1,0 +1,137 @@
+<html *ngIf="userService.isLogged">
+	<head>
+		<style rel="stylesheet">
+			.square-box {
+				background-color: #5cb85c;
+				border-style: solid;
+				border-width: 1px;
+				border-color: black;
+				position: relative;
+				float: left;
+				height: 1em;
+				width: 1em;
+				top: 0.25em;
+			}
+
+		</style>
+	</head>
+	
+	<body>
+		<!--<div class="panel panel-default">
+			<div class="panel-body"><a href="#">Home</a> / <a href="#">Requests</a> / Request</div>
+		</div>-->
+		<!-- <table class="table table-bordered">
+		    <tr>
+		      <td><b>#</b></td>
+		      <td><b>Person's ID</b></td>
+		      <td class="blue"><b>Absence Type</b></td>
+		      <td><b>Days</b></td>
+		      <td class="blue"><b>Dates</b></td>
+		      <td class="blue"><b>Submit Date</b></td>
+		      <td class="blue"><b>Status</b></td>
+		    </tr>
+		    <tr *ngFor="let request of allRequests" >
+			    <td>{{request.id}}</td>
+			    <td>{{request.user_id}}</td> 
+			    <td>{{request.type}}</td> 
+			    <td>{{request.days}}</td>
+			    <td>{{request.dates}}</td>
+			    <td>{{request.submit_time}}</td>
+			    <td>{{request.status}}</td>
+			</tr>
+		</table> -->
+
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<tr>
+					<td scope="row" class="col-md-5"><a routerLink="/main-page" routerLinkActive="active" class="btn btn-primary">Home</a> / <a  routerLink="/requests-page" routerLinkActive="active" class="btn btn-primary">Requests</a> / <a routerLink="/single-request-page" routerLinkActive="active" class="btn btn-success">Single Request</a>
+					
+
+				    <a *ngIf="userService.isLogged" style="float: right;" routerLink="/login" routerLinkActive="active" class="btn btn-warning" (click)="userService.logout()">Logout</a>
+				    <div style="float: right;"> &nbsp; </div>
+				    <a *ngIf="userService.isLogged && userService.isAdmin" style="float: right;" routerLink="/user" routerLinkActive="active" class="btn btn-info">Add Users</a>
+				    <a *ngIf="!userService.isLogged" style="float: right;" routerLink="/login" routerLinkActive="active" class="btn btn-warning" >Login</a>
+				    </td>
+				</tr>
+			</tbody>
+
+			<router-outlet></router-outlet>
+		</table>
+	
+
+		<!-- <div *ngFor="let request of allRequests"> 
+			<div *ngIf="request.user_id!=3"> no test by user 3 </div>
+			<div *ngIf="request.user_id==3"> test by user 3 </div>
+		</div> -->
+		
+
+	  <div *ngFor="let request of allRequests">
+	   <div *ngIf="request.id==current_opened_request_id">
+
+		<h1>Request {{request.id}}</h1><!--  (Actual request ID: {{current_opened_request_id}})</h1> -->
+		
+		<table class="table table-bordered table-striped">
+			<!--<thead>
+				<tr>
+					<th>#</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Username</th>
+				</tr>
+			</thead>-->
+			
+			<tbody>
+				<tr>
+					<th scope="row">Person Id</th>
+					<td>{{request.user_id}}<!-- Teodor Kostadinov --></td>
+				</tr>
+				<tr>
+					<th scope="row">Status</th>
+					<td>{{request.status}}
+						<button *ngIf="userService.isAdmin" type="button" (click)="approveRequest(request.id, request.user_id, request.type, request.days, request.dates, request.submit_time, 'Rejected', request.note, request.reason)" class="btn btn-danger" style="width: 30%;">Reject</button>
+						<button *ngIf="userService.isAdmin" type="button" (click)="approveRequest(request.id, request.user_id, request.type, request.days, request.dates, request.submit_time, 'Approved', request.note, request.reason)" class="btn btn-success" style="width: 30%;">Approve</button>
+      <!-- approved --></td>
+				</tr>
+				<tr>
+					<th scope="row">Submit Date</th>
+					<td>{{request.submit_time}}<!-- 2016-06-09 18:32:48 --></td>
+				</tr>
+				<tr>
+					<th scope="row">Type</th>
+					<td><div class="square-box" name="green"></div>{{request.type}}<!-- PTO --></td>
+				</tr>
+				<tr>
+					<th scope="row">Reason</th>
+					<td>{{request.reason}}<!-- Vacation abroad and probably exam preparation --></td>
+				</tr>
+				<tr>
+					<th scope="row">Note</th>
+					<td>{{request.note}}<!-- Larry the Bird --></td>
+				</tr>
+				<tr>
+					<th scope="row">Dates</th>
+					<td>{{request.dates}}<!-- 29-31 August, 1-2, 7-9 September 2016 --></td>
+				</tr>
+				<tr>
+					<th scope="row">Document</th>
+					<td><div id="download-link"> <a (click)="download(request.id, request.user_id, request.type, request.days, request.dates, request.submit_time, request.status, request.note, request.reason)" class="btn btn-success" style="width: 30%;">Document for Print</a> </div></td>
+				</tr>
+				<tr>
+					<th scope="row">Scan</th>
+					<td>No file uploaded. <a href="#">Add/Update Scan file</a></td>
+				</tr>
+			</tbody>
+		</table>
+	   </div>
+	  </div>
+		<!-- This calendar should have the given dates highlighted -->
+		<!-- {{request.dates}} -->
+		<app-rc-calendar></app-rc-calendar>
+	</body>
+	   
+</html>
+
+<h1 *ngIf="!userService.isLogged" style="align-content: center; text-align: center; padding-top: 10%;"> 
+You Have to be Logged In to Access this Page <br>
+<a routerLink="/main-page" routerLinkActive="active" class="btn btn-primary">Home</a>
+</h1>
